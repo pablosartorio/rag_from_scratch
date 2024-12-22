@@ -20,7 +20,7 @@ def load_documents_from_folder(docs_folder):
 # Initialize ChromaDB
 def create_db():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-    documents = load_documents_from_folder("/users/psartorio/tests/docs/")
+    documents = load_documents_from_folder("/users/psartorio/rag_from_scratch/docs/")
     chunks = text_splitter.split_documents(documents)
 
     # Use HuggingFace embeddings
@@ -33,7 +33,7 @@ def create_db():
     db = Chroma(
         collection_name="test_collection",
         embedding_function=embeddings,
-        persist_directory="/users/psartorio/tests/chroma_db"  # Ensure this directory exists
+        persist_directory="/users/psartorio/rag_from_scratch/chroma_db"  # Ensure this directory exists
     )
     
     # Add documents to the database
