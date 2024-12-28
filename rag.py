@@ -104,7 +104,7 @@ def gradio_service():
         description="Ask questions using the RAG system. Queries are processed to fetch relevant context and generate a response."
     )
 
-    iface.launch(server_name="0.0.0.0", server_port=7022)
+    iface.launch(server_name="0.0.0.0", server_port=7000)
 
 if __name__ == "__main__":
     gradio_service()

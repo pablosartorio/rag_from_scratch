@@ -1,10 +1,11 @@
 import gradio as gr
-from RAGService import question  # Ensure your `RAGService` has a `question` function
+#from RAGService import question  # Ensure your `RAGService` has a `question` function
 
 def query_response(query):
     try:
         # Call the RAGService's function
         return question(query)
+        return print("nada")
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
