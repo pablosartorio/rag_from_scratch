@@ -98,10 +98,10 @@ def gradio_service():
     # Gradio Interface
     iface = gr.Interface(
         fn=process_query,
-        inputs=gr.Textbox(lines=2, placeholder="Type your question here..."),
-        outputs=gr.Textbox(label="Response"),
-        title="RAG Query Interface",
-        description="Ask questions using the RAG system. Queries are processed to fetch relevant context and generate a response."
+        inputs=gr.Textbox(lines=2, placeholder="Escribir la pregunta acá..."),
+        outputs=gr.Textbox(label="Respuesta"),
+        title="Interfaz de preguntas con RAG",
+        description="Hacé una pregunta usando el sistema RAG. Las preguntas son procesadas para buscar contextos relevantes y generar una respuesta:."
     )
 
     iface.launch(server_name="0.0.0.0", server_port=7000)
