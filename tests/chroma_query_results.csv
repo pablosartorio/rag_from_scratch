@@ -1,0 +1,28 @@
+Filename,Total Word Count,Chunk Count,Metadata
+ejemplo.txt,82152,920,{'source': '/users/psartorio/rag_from_scratch/docs/ejemplo.txt'}
+ProcesoDesarrolloProductoSW_CharlaLideresTecnicos_20230606.txt,18912,220,{'source': '/users/psartorio/rag_from_scratch/docs/ProcesoDesarrolloProductoSW_CharlaLideresTecnicos_20230606.txt'}
+CHI Malena Ortiz.txt,22664,248,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Malena Ortiz.txt'}
+Charla CHI 22-03.txt,27652,316,{'source': '/users/psartorio/rag_from_scratch/docs/Charla CHI 22-03.txt'}
+Radares-Doppler-DL.txt,36922,424,{'source': '/users/psartorio/rag_from_scratch/docs/Radares-Doppler-DL.txt'}
+XXVIII Congreso Argentino de Ciencias de la Computación (CACIC).txt,33208,390,{'source': '/users/psartorio/rag_from_scratch/docs/XXVIII Congreso Argentino de Ciencias de la Computación (CACIC).txt'}
+CHI Matías Marquez.txt,16326,192,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Matías Marquez.txt'}
+Liofilización de alimentos - Boccoli.txt,19734,228,{'source': '/users/psartorio/rag_from_scratch/docs/Liofilización de alimentos - Boccoli.txt'}
+CHI Somos GIP.txt,30518,370,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Somos GIP.txt'}
+CHI GEIDi.txt,11982,146,{'source': '/users/psartorio/rag_from_scratch/docs/CHI GEIDi.txt'}
+CHI Willy Benito.txt,18100,210,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Willy Benito.txt'}
+CHI mujeres en electrónica.txt,18092,210,{'source': '/users/psartorio/rag_from_scratch/docs/CHI mujeres en electrónica.txt'}
+Gobierno de Datos.txt,34130,390,{'source': '/users/psartorio/rag_from_scratch/docs/Gobierno de Datos.txt'}
+CHI semiconductores.txt,22490,264,{'source': '/users/psartorio/rag_from_scratch/docs/CHI semiconductores.txt'}
+Hablemos de Datos.txt,27564,322,{'source': '/users/psartorio/rag_from_scratch/docs/Hablemos de Datos.txt'}
+IAlcaraz.txt,10922,134,{'source': '/users/psartorio/rag_from_scratch/docs/IAlcaraz.txt'}
+CHI Saravia (1).txt,25224,290,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Saravia (1).txt'}
+"CHI Defensa, Seguridad y Ambiente (1).txt",22714,272,"{'source': '/users/psartorio/rag_from_scratch/docs/CHI Defensa, Seguridad y Ambiente (1).txt'}"
+CHI Somos líderes en tecnología nuclear y te contamos por qué.txt,24250,282,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Somos líderes en tecnología nuclear y te contamos por qué.txt'}
+CHI Hace click acá.txt,14974,174,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Hace click acá.txt'}
+CHI FUND INVAP EDIT .txt,15444,188,{'source': '/users/psartorio/rag_from_scratch/docs/CHI FUND INVAP EDIT .txt'}
+CHI UBA INVAP.txt,28156,332,{'source': '/users/psartorio/rag_from_scratch/docs/CHI UBA INVAP.txt'}
+CHI Eduardo Santos.txt,24000,278,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Eduardo Santos.txt'}
+ChatGPT-Dev.txt,15802,174,{'source': '/users/psartorio/rag_from_scratch/docs/ChatGPT-Dev.txt'}
+Mancini.txt,29052,342,{'source': '/users/psartorio/rag_from_scratch/docs/Mancini.txt'}
+CHI Tanque reflector del RA-10.txt,19966,232,{'source': '/users/psartorio/rag_from_scratch/docs/CHI Tanque reflector del RA-10.txt'}
+Proyecto PITBA - Virginia Zilio.txt,12650,150,{'source': '/users/psartorio/rag_from_scratch/docs/Proyecto PITBA - Virginia Zilio.txt'}

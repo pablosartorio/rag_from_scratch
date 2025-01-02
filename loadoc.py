@@ -25,20 +25,20 @@ def create_db():
 
     # Use HuggingFace embeddings
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2", 
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
         model_kwargs={"device": "cpu"}
     )
-    
+
     # Initialize Chroma with persistence enabled
     db = Chroma(
         collection_name="test_collection",
         embedding_function=embeddings,
         persist_directory="/users/psartorio/rag_from_scratch/chroma_db"  # Ensure this directory exists
     )
-    
+
     # Add documents to the database
     db.add_documents(chunks)
-    
+
     print("Database successfully updated with persistence enabled.")
 
 create_db()

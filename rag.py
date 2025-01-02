@@ -6,13 +6,13 @@ import torch
 # Initialize ChromaDB connection
 def initialize_db():
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-        model_kwargs={"device": "cpu"}
+        model_name="sentence-transformers/all-MiniLM-L6-v2",                   #cómo funciona y opciones https://huggingface.co/sentence-transformers
+        model_kwargs={"device": "cpu"}                                         #por qué cpu y no gpu?
     )
     db = Chroma(
-        collection_name="test_collection",
-        embedding_function=embeddings,
-        persist_directory="/users/psartorio/rag_from_scratch/chroma_db"
+        collection_name="test_collection",                                     #cambiar esto a whisper translated audio. Mejorar info extraída de whisper.
+        embedding_function=embeddings,                                         #mejorar info generada a partir de audio (sentiment, ML ver)
+        persist_directory="/users/psartorio/rag_from_scratch/chroma_db"        #ésta es la misma que la de los documentos, ok
     )
     return db, embeddings
 
@@ -56,7 +56,7 @@ def generate_response(prompt, tokenizer, model, device):
     outputs = model.generate(
         inputs.input_ids,
         attention_mask=inputs.attention_mask,
-        max_new_tokens=100,
+        max_new_tokens=512,
         temperature=0.7,
         top_p=0.9,
         pad_token_id=tokenizer.pad_token_id
