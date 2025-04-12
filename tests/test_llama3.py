@@ -5,7 +5,8 @@ import torch
 model_name = "meta-llama/Llama-3.2-3B-Instruct"
 
 # Device setup
-device = "cuda" if torch.cuda.is_available() else "cpu"
+#device = "cuda" if torch.cuda.is_available() else "cpu"
+device = "cuda"
 
 print("Loading the tokenizer...")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -17,7 +18,7 @@ if tokenizer.pad_token is None:
 print("Loading the model...")
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    torch_dtype=torch.float16,
+##    torch_dtype=torch.float16,
     device_map="auto"
 )
 

@@ -25,15 +25,23 @@ def retrieve_relevant_chunks(query, db, embeddings, k=3):
 # Generate augmented prompt
 def generate_prompt(query, relevant_chunks):
     context = "\n".join(chunk.page_content for chunk in relevant_chunks)
+#    prompt_template = (
+#        "[INST] <<SYS>>\n"
+#        "Usa el contexto provisto para responder la pregunta del usuario. "
+#        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
+#        "Context:\n"
+#        "{context}\n\n"
+#        "Question:\n"
+#        "{query}\n"
+#        "[/INST]"
+#    )
     prompt_template = (
-        "[INST] <<SYS>>\n"
         "Usa el contexto provisto para responder la pregunta del usuario. "
         "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
         "Context:\n"
         "{context}\n\n"
         "Question:\n"
         "{query}\n"
-        "[/INST]"
     )
     return prompt_template.format(context=context, query=query)
 
