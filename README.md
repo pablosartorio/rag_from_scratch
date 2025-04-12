@@ -1,6 +1,6 @@
 # RAG from Scratch
 
-This repository documents our journey of learning how to build a Retrieval-Augmented Generation (RAG) system from scratch. By stripping away the complexities of previous implementations (e.g., using Docker and Hugging Face's Text Generation Inference), I aim to gain a deeper understanding of RAG pipelines and their components. This project is both a practical exercise and a learning resource.
+This repository documents my journey of learning how to build a Retrieval-Augmented Generation (RAG) system from scratch. By stripping away the complexities of previous implementations (e.g., using Docker and Hugging Face's Text Generation Inference), I aim to gain a deeper understanding of RAG pipelines and their components. This project is both a practical exercise and a learning resource.
 
 ## Objective
 The primary goal is to learn the fundamentals of creating a RAG system without relying on pre-configured setups. This includes:
