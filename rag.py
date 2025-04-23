@@ -7,7 +7,10 @@ import torch
 def initialize_db():
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",                   #cómo funciona y opciones https://huggingface.co/sentence-transformers
+                                         #all-mpnet-base-v2  es un modelo mas grande, reguiere GPU
         model_kwargs={"device": "cpu"}                                         #por qué cpu y no gpu?
+#        model_kwargs={"device": "cuda"}                                        # usa la GPU si está disponible
+
     )
     db = Chroma(
         collection_name="test_collection",                                     #cambiar esto a whisper translated audio. Mejorar info extraída de whisper.
