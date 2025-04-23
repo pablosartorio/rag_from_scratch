@@ -1,0 +1,16 @@
+# Archivos temporales de editores
+*.un~
+*~
+
+# Directorios de datos temporales
+chroma_data/
+chroma_db/
+flagged/
+
+# Archivos de log
+*.log
+
+# Otros posibles patrones útiles
+__pycache__/
+*.pyc
+.env
