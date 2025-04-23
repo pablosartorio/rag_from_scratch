@@ -3,6 +3,10 @@ from langchain_chroma import Chroma
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
+from dotenv import load_dotenv
+load_dotenv()
+
+
 # Initialize ChromaDB connection
 def initialize_db():
     embeddings = HuggingFaceEmbeddings(
