@@ -28,29 +28,44 @@ def retrieve_relevant_chunks(query, db, embeddings, k=3):
     query_embedding = embeddings.embed_query(query)
     results = db.similarity_search_by_vector(query_embedding, k=k)
     return results
-
-# Generate augmented prompt
 def generate_prompt(query, relevant_chunks):
-    context = "\n".join(chunk.page_content for chunk in relevant_chunks)
+    # Filtra chunks irrelevantes (ej: los que contienen "Isla de Pascua")
+    filtered_chunks = [chunk for chunk in relevant_chunks if "Isla de Pascua" not in chunk.page_content]
+    context = "\n".join(chunk.page_content for chunk in filtered_chunks[:3])  # Usa solo los 3 más relevantes
+
+    prompt_template = (
+        "Resume la charla en 4-5 puntos clave, usando ESTA ESTRUCTURA:\n"
+        "1. **Tema principal**: [¿Qué se discute?]\n"
+        "2. **Evidencia científica**: [Hallazgos mencionados]\n"
+        "3. **Problemas sociales**: [Horarios, tecnología, etc.]\n"
+        "4. **Consecuencias**: [Salud, rendimiento]\n"
+        "5. **Conclusión**: [Mensaje final].\n\n"
+        "Contexto:\n{context}\n\n"
+        "Resumen estructurado:"
+    )
+    return prompt_template.format(context=context)
+# Generate augmented prompt
+#def generate_prompt(query, relevant_chunks):
+#    context = "\n".join(chunk.page_content for chunk in relevant_chunks)
+##    prompt_template = (
+##        "[INST] <<SYS>>\n"
+##        "Usa el contexto provisto para responder la pregunta del usuario. "
+##        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
+##        "Context:\n"
+##        "{context}\n\n"
+##        "Question:\n"
+##        "{query}\n"
+##        "[/INST]"
+##    )
 #    prompt_template = (
-#        "[INST] <<SYS>>\n"
 #        "Usa el contexto provisto para responder la pregunta del usuario. "
 #        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
 #        "Context:\n"
 #        "{context}\n\n"
 #        "Question:\n"
 #        "{query}\n"
-#        "[/INST]"
 #    )
-    prompt_template = (
-        "Usa el contexto provisto para responder la pregunta del usuario. "
-        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
-        "Context:\n"
-        "{context}\n\n"
-        "Question:\n"
-        "{query}\n"
-    )
-    return prompt_template.format(context=context, query=query)
+#    return prompt_template.format(context=context, query=query)
 
 # Load LLaMA model
 def load_model(model_name):
@@ -62,12 +77,12 @@ def load_model(model_name):
         model_name,
         torch_dtype=torch.float16,
         device_map="auto"
-    )
+    ).to(device)  # Asegura que el modelo esté en el dispositivo correcto
     return tokenizer, model, device
 
 # Generate response from LLaMA
 def generate_response(prompt, tokenizer, model, device):
-    inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(device)
+    inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(device)  # Asegura que los inputs estén en el mismo dispositivo que el modelo
     outputs = model.generate(
         inputs.input_ids,
         attention_mask=inputs.attention_mask,
@@ -78,7 +93,34 @@ def generate_response(prompt, tokenizer, model, device):
     )
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
-
+#
+## Load LLaMA model
+#def load_model(model_name):
+#    device = "cuda" if torch.cuda.is_available() else "cpu"
+#    tokenizer = AutoTokenizer.from_pretrained(model_name)
+#    if tokenizer.pad_token is None:
+#        tokenizer.pad_token = tokenizer.eos_token
+#    model = AutoModelForCausalLM.from_pretrained(
+#        model_name,
+#        torch_dtype=torch.float16,
+#        device_map="auto"
+#    )
+#    return tokenizer, model, device
+#
+## Generate response from LLaMA
+#def generate_response(prompt, tokenizer, model, device):
+#    inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(device)
+#    outputs = model.generate(
+#        inputs.input_ids,
+#        attention_mask=inputs.attention_mask,
+#        max_new_tokens=512,
+#        temperature=0.7,
+#        top_p=0.9,
+#        pad_token_id=tokenizer.pad_token_id
+#    )
+#    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+#    return response
+#
 # Main query-handling function for Gradio
 def question(query):
     """
