@@ -3,14 +3,11 @@ from langchain_chroma import Chroma
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 
-from dotenv import load_dotenv
-load_dotenv()
-
-
 # Initialize ChromaDB connection
 def initialize_db():
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",                   #cómo funciona y opciones https://huggingface.co/sentence-transformers
+#        model_name="sentence-transformers/all-mpnet-base-v2",
                                          #all-mpnet-base-v2  es un modelo mas grande, reguiere GPU
         model_kwargs={"device": "cpu"}                                         #por qué cpu y no gpu?
 #        model_kwargs={"device": "cuda"}                                        # usa la GPU si está disponible
@@ -28,44 +25,19 @@ def retrieve_relevant_chunks(query, db, embeddings, k=3):
     query_embedding = embeddings.embed_query(query)
     results = db.similarity_search_by_vector(query_embedding, k=k)
     return results
-def generate_prompt(query, relevant_chunks):
-    # Filtra chunks irrelevantes (ej: los que contienen "Isla de Pascua")
-    filtered_chunks = [chunk for chunk in relevant_chunks if "Isla de Pascua" not in chunk.page_content]
-    context = "\n".join(chunk.page_content for chunk in filtered_chunks[:3])  # Usa solo los 3 más relevantes
 
-    prompt_template = (
-        "Resume la charla en 4-5 puntos clave, usando ESTA ESTRUCTURA:\n"
-        "1. **Tema principal**: [¿Qué se discute?]\n"
-        "2. **Evidencia científica**: [Hallazgos mencionados]\n"
-        "3. **Problemas sociales**: [Horarios, tecnología, etc.]\n"
-        "4. **Consecuencias**: [Salud, rendimiento]\n"
-        "5. **Conclusión**: [Mensaje final].\n\n"
-        "Contexto:\n{context}\n\n"
-        "Resumen estructurado:"
-    )
-    return prompt_template.format(context=context)
 # Generate augmented prompt
-#def generate_prompt(query, relevant_chunks):
-#    context = "\n".join(chunk.page_content for chunk in relevant_chunks)
-##    prompt_template = (
-##        "[INST] <<SYS>>\n"
-##        "Usa el contexto provisto para responder la pregunta del usuario. "
-##        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
-##        "Context:\n"
-##        "{context}\n\n"
-##        "Question:\n"
-##        "{query}\n"
-##        "[/INST]"
-##    )
-#    prompt_template = (
-#        "Usa el contexto provisto para responder la pregunta del usuario. "
-#        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
-#        "Context:\n"
-#        "{context}\n\n"
-#        "Question:\n"
-#        "{query}\n"
-#    )
-#    return prompt_template.format(context=context, query=query)
+def generate_prompt(query, relevant_chunks):
+    context = "\n".join(chunk.page_content for chunk in relevant_chunks)
+    prompt_template = (
+        "Usa el contexto provisto para responder la pregunta del usuario. "
+        "Si la respuesta no puede ser encontrada en el contexto, responde con \"No sé, y eso también está bien.\"\n"
+        "Context:\n"
+        "{context}\n\n"
+        "Question:\n"
+        "{query}\n"
+    )
+    return prompt_template.format(context=context, query=query)
 
 # Load LLaMA model
 def load_model(model_name):
@@ -86,9 +58,11 @@ def generate_response(prompt, tokenizer, model, device):
     outputs = model.generate(
         inputs.input_ids,
         attention_mask=inputs.attention_mask,
-        max_new_tokens=512,
+        max_new_tokens=200,
         temperature=0.7,
         top_p=0.9,
+        repetition_penalty=1.2,        # penaliza volver sobre lo ya dicho
+        no_repeat_ngram_size=3,        # ningún 3-grama repetido
         pad_token_id=tokenizer.pad_token_id
     )
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
@@ -129,7 +103,8 @@ def question(query):
     try:
         # Initialize database and model
         db, embeddings = initialize_db()
-        model_name = "meta-llama/Llama-3.2-3B-Instruct"
+#        model_name = "meta-llama/Llama-3.2-3B-Instruct"
+        model_name = "meta-llama/Llama-3.1-8B"
         tokenizer, model, device = load_model(model_name)
 
         # Retrieve relevant chunks
